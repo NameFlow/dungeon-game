@@ -14,6 +14,10 @@ class Player
 
     public function __construct(string $name, int $health, Point $point)
     {
+        if ($health <= 0) {
+            throw new InvalidArgumentException('Health cannot be less or equals 0');
+        }
+
         $this->name = $name;
         $this->health = $health;
         $this->point = $point;
