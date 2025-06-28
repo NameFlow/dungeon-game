@@ -9,6 +9,10 @@ class Point
 
     public function __construct(int $x, int $y)
     {
+        if ($x < 0 || $x > 10 && $y < 0 || $y > 10) {
+            throw new InvalidArgumentException('Minimum and maximum range is 0, 10');
+        }
+
         $this->x = $x;
         $this->y = $y;
     }
