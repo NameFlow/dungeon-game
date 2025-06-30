@@ -7,7 +7,7 @@ require_once __DIR__ . '/../Items/Weapon.php';
 /**
  * Трейт для атакующих сущностей
  *
- * !!! ОБЯЗАТЕЛЬНО ИСПОЛЬЗОВАТЬ ВАЛИДАЦИЮ validateInnateDamage()
+ * !!! ОБЯЗАТЕЛЬНО ИСПОЛЬЗОВАТЬ ИНИЦИАЛИЗАЦИЮ initializeInnateDamage()
  */
 trait TAttacker
 {
@@ -18,11 +18,12 @@ trait TAttacker
     /**
      * @throws InvalidArgumentException если innateDamage меньше или равен нулю
      */
-    public function validateInnateDamage(): void
+    public function initializeInnateDamage(int $innateDamage): void
     {
         if ($this->innateDamage <= 0) {
             throw new InvalidArgumentException('innateDamage не может быть меньше или равен нулю');
         }
+        $this->innateDamage = $innateDamage;
     }
 
     public function getAttackDamage(): int
