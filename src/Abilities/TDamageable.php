@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 trait TDamageable
 {
-    public int $health;
+    private int $health;
 
     public function takeDamage(int $damage): void
     {
