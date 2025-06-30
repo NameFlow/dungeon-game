@@ -20,7 +20,7 @@ trait TAttacker
      */
     public function initializeInnateDamage(int $innateDamage): void
     {
-        if ($this->innateDamage <= 0) {
+        if ($innateDamage <= 0) {
             throw new InvalidArgumentException('innateDamage не может быть меньше или равен нулю');
         }
         $this->innateDamage = $innateDamage;
