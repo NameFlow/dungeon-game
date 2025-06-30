@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-interface DamageableInterface
+interface AttackerInterface
 {
     public function getAttackDamage(): int;
 }
