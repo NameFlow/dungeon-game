@@ -12,8 +12,10 @@ abstract class Creature
     public function __construct(string $name, Point $position)
     {
         if (empty(trim($name))) {
-            $this->name = $name;
+            throw new InvalidArgumentException('Свойство name не может быть пустой строкой');
         }
+
+        $this->name = $name;
         $this->position = $position;
     }
 }
