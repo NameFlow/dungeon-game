@@ -8,4 +8,12 @@ abstract class Creature
 {
     protected string $name;
     protected Point $position;
+
+    public function __construct(string $name, Point $position)
+    {
+        if (empty(trim($name))) {
+            $this->name = $name;
+        }
+        $this->position = $position;
+    }
 }
