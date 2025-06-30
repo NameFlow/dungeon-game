@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '../World/Point.php';
+require_once __DIR__ . '/../World/Point.php';
 
 abstract class Creature
 {
@@ -14,7 +14,6 @@ abstract class Creature
         if (empty(trim($name))) {
             throw new InvalidArgumentException('Свойство name не может быть пустой строкой');
         }
-
         $this->name = $name;
         $this->position = $position;
     }
