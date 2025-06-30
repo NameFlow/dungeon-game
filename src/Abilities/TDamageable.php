@@ -7,12 +7,12 @@ trait TDamageable
     private int $health;
 
     /**
-     * @throws InvalidArgumentException если innateDamage меньше или равен нулю
+     * @throws InvalidArgumentException если initializeHealth меньше или равен нулю
      */
     public function initializeHealth(int $health): void
     {
         if ($health <= 0) {
-            throw new InvalidArgumentException('innateDamage не может быть меньше или равен нулю');
+            throw new InvalidArgumentException('initializeHealth не может быть меньше или равен нулю');
         }
         $this->health = $health;
     }
