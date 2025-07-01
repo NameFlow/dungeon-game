@@ -16,8 +16,8 @@ class Point
         $this->y = $y;
     }
 
-    public function calculateManhattanDistance(int $x2, int $y2): int
+    public function calculateManhattanDistance(Point $pointTo): int
     {
-        return abs(($x2 - $this->x) + ($y2 - $this->y));
+        return abs(($pointTo->x - $this->x) + ($pointTo->y - $this->y));
     }
 }
