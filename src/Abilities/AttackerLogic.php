@@ -9,7 +9,7 @@ require_once __DIR__ . '/../Items/Weapon.php';
  *
  * !!! ОБЯЗАТЕЛЬНО ИСПОЛЬЗОВАТЬ ИНИЦИАЛИЗАЦИЮ initializeInnateDamage()
  */
-trait TAttacker
+trait AttackerLogic
 {
     private ?Weapon $equippedWeapon;
 
