@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../World/Point.php';
+require_once __DIR__ . '/../Other/Point.php';
 
 abstract class MapEntity
 {
