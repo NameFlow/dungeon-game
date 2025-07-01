@@ -8,7 +8,7 @@ trait CanEquipWeapon
 {
     private ?Weapon $equippedWeapon = null;
 
-    public function equipWeapon(Weapon $weapon)
+    public function equipWeapon(Weapon $weapon): void
     {
         $this->equippedWeapon = $weapon;
     }
