@@ -11,12 +11,11 @@ require_once __DIR__ . '/../Contracts/DamageableInterface.php';
 require_once __DIR__ . '/../Abilities/AttackerLogic.php';
 require_once __DIR__ . '/../Abilities/Damageable.php';
 
-class Player extends MapEntity implements AttackerLogicInterface, CanEquipWeaponInterface, DamageableInterface
+class Monster extends MapEntity implements AttackerLogicInterface, CanEquipWeaponInterface, DamageableInterface
 {
     use AttackerLogic;
     use CanEquipWeapon;
     use Damageable;
-
 
     public function __construct(
         string $name,
