@@ -23,7 +23,7 @@ class Monster extends MapEntity implements AttackerLogicInterface, CanEquipWeapo
         Point $position,
         int $health,
         int $innateDamage,
-        ?Weapon $weapon
+        ?Weapon $weapon = null
     ) {
         parent::__construct($name, $position);
 

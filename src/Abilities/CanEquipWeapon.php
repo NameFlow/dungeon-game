@@ -12,4 +12,9 @@ trait CanEquipWeapon
     {
         $this->equippedWeapon = $weapon;
     }
+
+    public function getWeapon(): ?Weapon
+    {
+        return $this->equippedWeapon;
+    }
 }
