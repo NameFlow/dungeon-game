@@ -17,4 +17,14 @@ abstract class MapEntity
         $this->name = $name;
         $this->position = $position;
     }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getPosition(): Point
+    {
+        return $this->position;
+    }
 }
