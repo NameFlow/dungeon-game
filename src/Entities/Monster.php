@@ -9,6 +9,7 @@ require_once __DIR__ . '/../Contracts/CanEquipWeaponInterface.php';
 require_once __DIR__ . '/../Contracts/DamageableInterface.php';
 
 require_once __DIR__ . '/../Abilities/AttackerLogic.php';
+require_once __DIR__ . '/../Abilities/CanEquipWeapon.php';
 require_once __DIR__ . '/../Abilities/Damageable.php';
 
 class Monster extends MapEntity implements AttackerLogicInterface, CanEquipWeaponInterface, DamageableInterface
