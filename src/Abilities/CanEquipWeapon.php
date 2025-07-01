@@ -6,7 +6,7 @@ require_once('../Items/Weapon.php');
 
 trait CanEquipWeapon
 {
-    private ?Weapon $equippedWeapon = null;
+    private ?Weapon $equippedWeapon;
 
     public function equipWeapon(Weapon $weapon): void
     {
