@@ -7,12 +7,10 @@ require_once __DIR__ . '/../Items/Weapon.php';
 /**
  * Трейт для атакующих сущностей
  *
- * !!! ОБЯЗАТЕЛЬНО ИСПОЛЬЗОВАТЬ ИНИЦИАЛИЗАЦИЮ initializeInnateDamage()
+ * !!! ОБЯЗАТЕЛЬНО ИСПОЛЬЗОВАТЬ ИНИЦИАЛИЗАЦИЮ initializeInnateDamage() в __construct
  */
 trait AttackerLogic
 {
-    private ?Weapon $equippedWeapon;
-
     private int $innateDamage;
 
     /**
@@ -25,6 +23,14 @@ trait AttackerLogic
         }
         $this->innateDamage = $innateDamage;
     }
+
+    /**
+     * Получает Итоговый урон от атаки
+     *
+     * Может взаимодействовать с трейтом CanEquipWeapon
+     *
+     * @return int Возвращает изначальный урон + урон от оружия, если оружие имеется, иначе возвращает innateDamage
+     */
 
     public function getAttackDamage(): int
     {

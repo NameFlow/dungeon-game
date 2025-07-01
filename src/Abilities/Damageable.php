@@ -2,17 +2,22 @@
 
 declare(strict_types=1);
 
+/**
+ * Трейт для получающих урон сущностей
+ *
+ * !!! ОБЯЗАТЕЛЬНО ИСПОЛЬЗОВАТЬ ИНИЦИАЛИЗАЦИЮ initializeHealth() в __construct
+ */
 trait Damageable
 {
     private int $health;
 
     /**
-     * @throws InvalidArgumentException если initializeHealth меньше или равен нулю
+     * @throws InvalidArgumentException если health меньше или равен нулю
      */
     public function initializeHealth(int $health): void
     {
         if ($health <= 0) {
-            throw new InvalidArgumentException('initializeHealth не может быть меньше или равен нулю');
+            throw new InvalidArgumentException('health не может быть меньше или равен нулю');
         }
         $this->health = $health;
     }
