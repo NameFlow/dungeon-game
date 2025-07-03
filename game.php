@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/src/Other/functions.php';
+
 require_once __DIR__ . '/src/Entities/Player.php';
 require_once __DIR__ . '/src/Entities/Monster.php';
 require_once __DIR__ . '/src/Entities/Trap.php';
@@ -67,7 +69,7 @@ $objectsOnMap = [
     ),
     new Monster(
         name: 'Разъяренная гончая',
-        position: new Point(5, 3),
+        position: new Point(5, 4),
         health: 35,
         innateDamage: 7,
     ),
@@ -89,7 +91,28 @@ $objectsOnMap = [
         position: new Point(1, 1),
         health: 20,
         innateDamage: 5,
-    )
+    ),
+    new Monster(
+        name: 'Орк',
+        position: new Point(9, 6),
+        health: 60,
+        innateDamage: 10,
+        weapon: new Weapon(name: 'Дубинка', damage: 10)
+    ),
+    new Monster(
+        name: 'Орк',
+        position: new Point(6, 10),
+        health: 60,
+        innateDamage: 10,
+        weapon: new Weapon(name: 'Дубинка', damage: 10)
+    ),
+    new Monster(
+        name: 'Орк',
+        position: new Point(5, 3),
+        health: 60,
+        innateDamage: 10,
+        weapon: new Weapon(name: 'Дубинка', damage: 10)
+    ),
 ];
 
 $exitPoint = new Point(
@@ -106,14 +129,15 @@ while (!$isPlayerReachedExitPoint) {
     $distanceToExit = $player->getPosition()->calculateManhattanDistance($exitPoint);
 
     if ($distanceToExit === 0) {
-        echo(
+        echoWithPseudoloading(
             '------------------' . PHP_EOL .
             '------------------' . PHP_EOL .
             'Поздравляем, вы дошли до выхода и выжили!' . PHP_EOL .
             '------------------' . PHP_EOL .
             "Это заняло $countOfIterations шагов!" . PHP_EOL .
             '------------------' . PHP_EOL .
-            '------------------' . PHP_EOL
+            '------------------' . PHP_EOL,
+            50000
         );
         exit();
     }
@@ -128,19 +152,17 @@ while (!$isPlayerReachedExitPoint) {
         }
 
         if ($objectOnMap instanceof Monster) {
-            echo(
+            echoWithPseudoloading(
                 PHP_EOL .
                 '------------------' . PHP_EOL .
                 'Вы наткнулись на монстра!' . PHP_EOL .
                 '------------------' . PHP_EOL
             );
 
-            usleep(500000);
-
             $battle = true;
 
             while ($battle) {
-                printf(
+                echoWithPseudoloading(sprintf(
                     PHP_EOL .
                     '------------------' . PHP_EOL .
                     'Статус монстра "%s":' . PHP_EOL .
@@ -150,11 +172,9 @@ while (!$isPlayerReachedExitPoint) {
                     $objectOnMap->getName(),
                     $objectOnMap->getHealth(),
                     $objectOnMap->getAttackDamage()
-                );
+                ));
 
-                usleep(500000);
-
-                printf(
+                echoWithPseudoloading(sprintf(
                     PHP_EOL .
                     '------------------' . PHP_EOL .
                     'Статус игрока "%s":' . PHP_EOL .
@@ -164,27 +184,25 @@ while (!$isPlayerReachedExitPoint) {
                     $player->getName(),
                     $player->getHealth(),
                     $player->getAttackDamage()
-                );
-
-                usleep(500000);
+                ));
 
                 // player attacks
-                $playerKey = readline('Нажмите Enter, чтобы ударить!');
-
-                usleep(500000);
+                echoWithPseudoloading('Нажмите Enter, чтобы ударить! ');
+                $playerKey = readline();
 
                 // moster take damage
                 $objectOnMap->takeDamage($player->getAttackDamage());
 
                 // if obj dead break
                 if ($objectOnMap->isDead()) {
+                    echoWithPseudoloading(PHP_EOL . 'Вы сразили монстра!' . PHP_EOL);
                     break 2;
                 }
 
                 // if obj not dead
-                echo PHP_EOL . "О нет, у вас не хватило урона!, он бьет в ответ!" . PHP_EOL;
-
-                usleep(500000);
+                echoWithPseudoloading(
+                    PHP_EOL . "О нет, у вас не хватило урона!, он бьет в ответ!" . PHP_EOL
+                );
 
                 $player->takeDamage($objectOnMap->getAttackDamage());
 
@@ -214,18 +232,17 @@ while (!$isPlayerReachedExitPoint) {
         $distanceToExit
     );
 
-    usleep(500000);
-    echo $playerStatus;
+    echoWithPseudoloading($playerStatus);
 
     // !!! NEED TO REPLACE IN MoveController
     $nextStepIsValid = false;
 
     while (!$nextStepIsValid) {
 
-        usleep(500000);
+        echoWithPseudoloading("Куда пойдем? w(0, +1), a(-1, 0), s(0, -1), d(+1, 0): ");
         $nextStepInput = trim(
             strtolower(
-                readline("Куда пойдем? w(0, +1), a(-1, 0), s(0, -1), d(+1, 0): ")
+                readline()
             )
         );
 
@@ -250,8 +267,9 @@ while (!$isPlayerReachedExitPoint) {
                 exit();
 
             default:
-                usleep(500000);
-                echo PHP_EOL . "Введите корректное значение!" . PHP_EOL;
+                echoWithPseudoloading(
+                    PHP_EOL . "Введите корректное значение!" . PHP_EOL
+                );
                 continue 2;
         }
 
@@ -263,7 +281,9 @@ while (!$isPlayerReachedExitPoint) {
         ];
 
         if (Point::isOutOfMap($playerGoesOnCoordinates)) {
-            echo PHP_EOL . "Ты ударился в стену!" . PHP_EOL;
+            echoWithPseudoloading(
+                PHP_EOL . "Ты ударился в стену!" . PHP_EOL
+            );
             continue;
         }
 
