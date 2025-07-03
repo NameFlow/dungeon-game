@@ -9,7 +9,7 @@ declare(strict_types=1);
  * @param integer $usleepTime
  * @return void
  */
-function echoWithPseudoloading(string $string, $usleepTime = 10000): void
+function echoWithPseudoloading(string $string, $usleepTime = 8500): void
 {
     foreach (str_split($string) as $letter) {
         echo $letter;
