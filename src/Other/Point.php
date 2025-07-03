@@ -21,6 +21,29 @@ class Point
         return abs(($pointTo->x - $this->x) + ($pointTo->y - $this->y));
     }
 
+    /**
+     * Checking if a point is within range or not
+     *
+     * @param Point $point
+     * @return boolean false if not, true if is
+     */
+    public function isOutOfMap(Point $point): bool
+    {
+        $x = $point->getX();
+        $y = $point->getY();
+
+        if (($x < 0 || $x > 10) || ($y < 0 || $y > 10)) {
+            return false;
+        }
+        return true;
+    }
+
+    public function setXY(int $x, int $y): void
+    {
+        $this->x = $x;
+        $this->y = $y;
+    }
+
     public function setX(int $x): void
     {
         $this->x = $x;
