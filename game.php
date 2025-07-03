@@ -12,6 +12,7 @@ require_once __DIR__ . '/src/Other/Point.php';
 // initialize player
 
 while (empty($playerName)) {
+    echo PHP_EOL;
     $playerName = trim(readline("Как зовут вашего персонажа? "));
 }
 
@@ -68,16 +69,32 @@ $isPlayerReachedExitPoint = false;
 
 // start the game
 while (!$isPlayerReachedExitPoint) {
+
     $distanceToExit = $player->getPosition()->calculateManhattanDistance($exitPoint);
 
+    if ($distanceToExit === 0) {
+        echo(
+            '-------------------' . PHP_EOL .
+            '-------------------' . PHP_EOL .
+            'Поздравляем, вы дошли до выхода и выжили!' . PHP_EOL .
+            '-------------------' . PHP_EOL .
+            "Это заняло $countOfIterations шагов!" . PHP_EOL .
+            '-------------------' . PHP_EOL .
+            '-------------------' . PHP_EOL
+        );
+        exit();
+    }
+
     $playerStatus = sprintf(
-        '-----------------------',
+        PHP_EOL .
+        '-------------------' . PHP_EOL .
         'Статус игрока "%s":' . PHP_EOL .
         'Здоровье: %s,' . PHP_EOL .
         'Текущее оружие: %s, %s урона' . PHP_EOL .
         'Ваше местоположение: %s, %s' . PHP_EOL .
-        'До выхода осталось: %s клеток' . PHP_EOL,
-        '-----------------------',
+        'До выхода осталось: %s клеток' . PHP_EOL .
+        '-------------------' . PHP_EOL .
+        PHP_EOL,
         $player->getName(),
         $player->getHealth(),
         $player->getWeapon()->getName(),
@@ -93,6 +110,7 @@ while (!$isPlayerReachedExitPoint) {
     $nextStepIsValid = false;
 
     while (!$nextStepIsValid) {
+
 
         $nextStepInput = trim(
             strtolower(
@@ -145,5 +163,5 @@ while (!$isPlayerReachedExitPoint) {
         $nextStepIsValid = true;
     }
 
-    var_dump("{$player->getPosition()->getX()} " . " {$player->getPosition()->getY()}");
+    $countOfIterations++;
 }
