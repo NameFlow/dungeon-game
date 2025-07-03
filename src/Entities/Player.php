@@ -33,4 +33,21 @@ class Player extends MapEntity implements AttackerLogicInterface, CanEquipWeapon
 
         $this->equippedWeapon = $weapon;
     }
+
+    public static function gameOver(): void
+    {
+        $gameOver = str_split(
+            PHP_EOL .
+            '------------------' . PHP_EOL .
+            "    ВЫ ПОГИБЛИ" . PHP_EOL .
+            '------------------' . PHP_EOL
+        );
+
+        foreach ($gameOver as $letter) {
+            echo $letter;
+            usleep(50000);
+        }
+
+        exit();
+    }
 }
