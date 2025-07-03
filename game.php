@@ -21,7 +21,7 @@ $player = new Player(
     position: new Point(0, 0),
     health: 100,
     innateDamage: 1,
-    weapon: new Weapon(name: 'Меч', damage: 10)
+    weapon: new Weapon(name: 'Меч', damage: 15)
 );
 
 // initialize world
@@ -29,15 +29,15 @@ $objectsOnMap = [
     new Monster(
         name: 'Орк',
         position: new Point(7, 7),
-        health: 30,
-        innateDamage: 5,
-        weapon: new Weapon(name: 'Дубинка', damage: 5)
+        health: 60,
+        innateDamage: 10,
+        weapon: new Weapon(name: 'Дубинка', damage: 10)
     ),
     new Monster(
         name: 'Разъяренная гончая',
         position: new Point(5, 0),
-        health: 15,
-        innateDamage: 5,
+        health: 35,
+        innateDamage: 7,
     ),
     new Monster(
         name: 'Гадкий гоблин',
@@ -49,13 +49,45 @@ $objectsOnMap = [
     new Monster(
         name: 'Разъяренная гончая',
         position: new Point(2, 4),
-        health: 15,
-        innateDamage: 5,
+        health: 35,
+        innateDamage: 7,
     ),
     new Monster(
         name: 'Слизняк',
         position: new Point(3, 3),
-        health: 5,
+        health: 20,
+        innateDamage: 5,
+    ),
+    new Monster(
+        name: 'Орк',
+        position: new Point(6, 6),
+        health: 60,
+        innateDamage: 10,
+        weapon: new Weapon(name: 'Дубинка', damage: 10)
+    ),
+    new Monster(
+        name: 'Разъяренная гончая',
+        position: new Point(5, 3),
+        health: 35,
+        innateDamage: 7,
+    ),
+    new Monster(
+        name: 'Гадкий гоблин',
+        position: new Point(4, 5),
+        health: 25,
+        innateDamage: 1,
+        weapon: new Weapon(name: 'Кинжал', damage: 2)
+    ),
+    new Monster(
+        name: 'Разъяренная гончая',
+        position: new Point(8, 5),
+        health: 35,
+        innateDamage: 7,
+    ),
+    new Monster(
+        name: 'Слизняк',
+        position: new Point(1, 1),
+        health: 20,
         innateDamage: 5,
     )
 ];
@@ -66,6 +98,7 @@ $exitPoint = new Point(
 );
 
 $isPlayerReachedExitPoint = false;
+$countOfIterations = 0;
 
 // start the game
 while (!$isPlayerReachedExitPoint) {
@@ -74,26 +107,103 @@ while (!$isPlayerReachedExitPoint) {
 
     if ($distanceToExit === 0) {
         echo(
-            '-------------------' . PHP_EOL .
-            '-------------------' . PHP_EOL .
+            '------------------' . PHP_EOL .
+            '------------------' . PHP_EOL .
             'Поздравляем, вы дошли до выхода и выжили!' . PHP_EOL .
-            '-------------------' . PHP_EOL .
+            '------------------' . PHP_EOL .
             "Это заняло $countOfIterations шагов!" . PHP_EOL .
-            '-------------------' . PHP_EOL .
-            '-------------------' . PHP_EOL
+            '------------------' . PHP_EOL .
+            '------------------' . PHP_EOL
         );
         exit();
     }
 
+    foreach ($objectsOnMap as $objectOnMap) {
+        $isPlayerFoundObjectOnMap = false;
+
+        if ($player->getPosition()->getXY() == $objectOnMap->getPosition()->getXY()) {
+            $isPlayerFoundObjectOnMap = true;
+        } else {
+            continue;
+        }
+
+        if ($objectOnMap instanceof Monster) {
+            echo(
+                PHP_EOL .
+                '------------------' . PHP_EOL .
+                'Вы наткнулись на монстра!' . PHP_EOL .
+                '------------------' . PHP_EOL
+            );
+
+            usleep(500000);
+
+            $battle = true;
+
+            while ($battle) {
+                printf(
+                    PHP_EOL .
+                    '------------------' . PHP_EOL .
+                    'Статус монстра "%s":' . PHP_EOL .
+                    'Здоровье: %d,' . PHP_EOL .
+                    'Урон: %d' . PHP_EOL .
+                    '------------------' . PHP_EOL,
+                    $objectOnMap->getName(),
+                    $objectOnMap->getHealth(),
+                    $objectOnMap->getAttackDamage()
+                );
+
+                usleep(500000);
+
+                printf(
+                    PHP_EOL .
+                    '------------------' . PHP_EOL .
+                    'Статус игрока "%s":' . PHP_EOL .
+                    'Здоровье: %d,' . PHP_EOL .
+                    'Ваш урон: %d' . PHP_EOL .
+                    '------------------' . PHP_EOL,
+                    $player->getName(),
+                    $player->getHealth(),
+                    $player->getAttackDamage()
+                );
+
+                usleep(500000);
+
+                // player attacks
+                $playerKey = readline('Нажмите Enter, чтобы ударить!');
+
+                usleep(500000);
+
+                // moster take damage
+                $objectOnMap->takeDamage($player->getAttackDamage());
+
+                // if obj dead break
+                if ($objectOnMap->isDead()) {
+                    break 2;
+                }
+
+                // if obj not dead
+                echo PHP_EOL . "О нет, у вас не хватило урона!, он бьет в ответ!" . PHP_EOL;
+
+                usleep(500000);
+
+                $player->takeDamage($objectOnMap->getAttackDamage());
+
+                if ($player->isDead()) {
+                    Player::gameOver();
+                }
+            }
+        }
+    }
+
     $playerStatus = sprintf(
         PHP_EOL .
-        '-------------------' . PHP_EOL .
+        '------------------' . PHP_EOL .
         'Статус игрока "%s":' . PHP_EOL .
-        'Здоровье: %s,' . PHP_EOL .
-        'Текущее оружие: %s, %s урона' . PHP_EOL .
-        'Ваше местоположение: %s, %s' . PHP_EOL .
-        'До выхода осталось: %s клеток' . PHP_EOL .
-        '-------------------' . PHP_EOL .
+        'Здоровье: %d,' . PHP_EOL .
+        'Текущее оружие: %s, %d урона' . PHP_EOL .
+        'Ваше местоположение: %d, %d' . PHP_EOL .
+        'До выхода осталось: %d клеток' . PHP_EOL .
+        '------------------' . PHP_EOL .
         PHP_EOL,
         $player->getName(),
         $player->getHealth(),
@@ -104,6 +214,7 @@ while (!$isPlayerReachedExitPoint) {
         $distanceToExit
     );
 
+    usleep(500000);
     echo $playerStatus;
 
     // !!! NEED TO REPLACE IN MoveController
@@ -111,7 +222,7 @@ while (!$isPlayerReachedExitPoint) {
 
     while (!$nextStepIsValid) {
 
-
+        usleep(500000);
         $nextStepInput = trim(
             strtolower(
                 readline("Куда пойдем? w(0, +1), a(-1, 0), s(0, -1), d(+1, 0): ")
@@ -124,7 +235,7 @@ while (!$isPlayerReachedExitPoint) {
                 break;
 
             case 'a':
-                $nextStepValue = ["x" => "-1", "y" => "+1"];
+                $nextStepValue = ["x" => "-1", "y" => "0"];
                 break;
 
             case 's':
@@ -139,6 +250,7 @@ while (!$isPlayerReachedExitPoint) {
                 exit();
 
             default:
+                usleep(500000);
                 echo PHP_EOL . "Введите корректное значение!" . PHP_EOL;
                 continue 2;
         }
