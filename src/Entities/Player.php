@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/../Other/functions.php';
+
 require_once __DIR__ . '/MapEntity.php';
 
 require_once __DIR__ . '/../Contracts/AttackerLogicInterface.php';
@@ -36,17 +38,13 @@ class Player extends MapEntity implements AttackerLogicInterface, CanEquipWeapon
 
     public static function gameOver(): void
     {
-        $gameOver = str_split(
+        echoWithPseudoloading(
             PHP_EOL .
             '------------------' . PHP_EOL .
             "    ВЫ ПОГИБЛИ" . PHP_EOL .
-            '------------------' . PHP_EOL
+            '------------------' . PHP_EOL,
+            50000
         );
-
-        foreach ($gameOver as $letter) {
-            echo $letter;
-            usleep(50000);
-        }
 
         exit();
     }
