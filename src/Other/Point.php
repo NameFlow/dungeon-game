@@ -16,26 +16,32 @@ class Point
         $this->y = $y;
     }
 
+    /**
+     * Checking if a point is within range or not
+     *
+     * @param array $coordinates wait associative array with keys "x" and "y"
+     * @return boolean false if not, true if is
+     */
+    public static function isOutOfMap(array $coordinates): bool
+    {
+        $x = $coordinates['x'];
+        $y = $coordinates['y'];
+
+        if (($x < 0 || $x > 10) || ($y < 0 || $y > 10)) {
+            return true;
+        }
+        return false;
+    }
+
     public function calculateManhattanDistance(Point $pointTo): int
     {
         return abs(($pointTo->x - $this->x) + ($pointTo->y - $this->y));
     }
 
-    /**
-     * Checking if a point is within range or not
-     *
-     * @param Point $point
-     * @return boolean false if not, true if is
-     */
-    public function isOutOfMap(Point $point): bool
+    public function moveTo(Point $point): void
     {
-        $x = $point->getX();
-        $y = $point->getY();
-
-        if (($x < 0 || $x > 10) || ($y < 0 || $y > 10)) {
-            return false;
-        }
-        return true;
+        $this->x = $point->getX();
+        $this->y = $point->getY();
     }
 
     public function setXY(int $x, int $y): void
@@ -52,6 +58,18 @@ class Point
     public function setY(int $y): void
     {
         $this->y = $y;
+    }
+
+    /**
+     * @return array
+     */
+
+    public function getXY(): array
+    {
+        return [
+            "x" => $this->x,
+            "y" => $this->y
+        ];
     }
 
     public function getX(): int
