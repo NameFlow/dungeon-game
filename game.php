@@ -71,11 +71,13 @@ while (!$isPlayerReachedExitPoint) {
     $distanceToExit = $player->getPosition()->calculateManhattanDistance($exitPoint);
 
     $playerStatus = sprintf(
+        '-----------------------',
         'Статус игрока "%s":' . PHP_EOL .
         'Здоровье: %s,' . PHP_EOL .
         'Текущее оружие: %s, %s урона' . PHP_EOL .
         'Ваше местоположение: %s, %s' . PHP_EOL .
         'До выхода осталось: %s клеток' . PHP_EOL,
+        '-----------------------',
         $player->getName(),
         $player->getHealth(),
         $player->getWeapon()->getName(),
